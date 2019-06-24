@@ -77,7 +77,7 @@ async function packFolder(itemPath, settings, itemOptions) {
   const sourceDirectory = path.join(settings.sourceDirectory, itemPath);
 
   // get all wav's
-  const paths = await globby(`${sourceDirectory}/*.wav`),
+  const paths = await globby(`${sourceDirectory}/**/*.wav`),
     files = [];
 
   for (const filepath of paths) {
@@ -89,8 +89,12 @@ async function packFolder(itemPath, settings, itemOptions) {
     let duration = await getAudioDurationInSeconds(filepath)
     duration = Math.round(duration * 10000) / 10000;
 
+    // basepath er af halen
+    const cleanedFilepath = filepath.replace(`${sourceDirectory}/`, '');
+
     const info = {
-      filename: basename(filepath, '.wav'),
+      filename: basename(cleanedFilepath, '.wav'),
+      path: cleanedFilepath.replace(`${basename(cleanedFilepath)}`, ''),
       duration,
       hash,
     }
@@ -124,8 +128,8 @@ async function copyFiles(itemPath, files, settings) {
 
   for (const file of files) {
     try {
-      await fs.copy(`${path.join(sourceDirectory, file.filename)}.mp3`, `${path.join(settings.targetDirectory, file.hash)}.mp3`);
-      await fs.copy(`${path.join(sourceDirectory, file.filename)}.ogg`, `${path.join(settings.targetDirectory, file.hash)}.ogg`);
+      await fs.copy(`${path.join(sourceDirectory, file.path,file.filename)}.mp3`, `${path.join(settings.targetDirectory, file.hash)}.mp3`);
+      await fs.copy(`${path.join(sourceDirectory, file.path, file.filename)}.ogg`, `${path.join(settings.targetDirectory, file.hash)}.ogg`);
     } catch (error) {
       console.log(error)
       return false;

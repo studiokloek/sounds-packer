@@ -8,7 +8,8 @@ import fs from 'fs-extra';
 import path from 'path';
 
 const loaderInfoTemplate = `export default {
-  fileName : '{fileName}',
+  assetName : '{assetName}',
+  assets : {assets},
   numberOfSounds : {numberOfSounds},
   type: 'sounds'
 };`;
@@ -32,6 +33,7 @@ function convertPathToVariableName(filePath, basePath) {
   // haal titel elementen uit base path
   let titleParts = basePath.split('/');
   titleParts = titleParts.slice(titleParts.length - (titleParts.length === 1 ? 1 : 2));
+
 
   titleParts.push('sounds');
   titleParts = uppercamelcase(titleParts.join('-'));
@@ -59,7 +61,7 @@ function parseAssetData(files, assetPath) {
       name: file.name,
     }
 
-    set(parsedData, convertPathToVariableName(file.name, basePath), assetInfo);
+    set(parsedData, convertPathToVariableName(path.join(file.path,file.name), basePath), assetInfo);
   }
 
   return parsedData;
@@ -93,6 +95,7 @@ function generateContents(parsedAssetData, loaderData) {
   let contents = '';
 
   // assets
+  const assets = [];
   for (const assetName of Object.keys(parsedAssetData)) {
     const items = getSortedItems(parsedAssetData[assetName]);
 
@@ -103,11 +106,14 @@ function generateContents(parsedAssetData, loaderData) {
       assetName: assetName,
       assetData: itemsContent
     })}\n`;
+
+    assets.push(assetName);
   }
 
   // loader
   contents = `${contents}${pupa(loaderInfoTemplate, {
-    fileName: loaderData.fileName,
+    assets: assets,
+    assetName: loaderData.fileName,
     numberOfSounds: loaderData.numberOfSounds
   })}\n`;
 
@@ -136,7 +142,6 @@ export async function generateCode(assetPath, files, settings, itemOptions) {
       fileName: assetPath,
       numberOfSounds: files.length
     }
-
 
   const contents = generateContents(parsedAssetData, loaderInfo),
     scriptpath = getScriptPath(assetPath, scriptDirectory);
