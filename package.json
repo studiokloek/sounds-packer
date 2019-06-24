@@ -1,0 +1,59 @@
+{
+  "name": "@studiokloek/sounds-packer",
+  "version": "0.0.1",
+  "description": "Tool to pack sounds for usage in projects.",
+  "author": "Martijn Swart <opensource@studiokloek.nl> (https://studiokloek.nl)",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "github:studiokloek/sounds-packer",
+  "bugs": {
+    "url": "https://github.com/studiokloek/sounds-packer/issues"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "$npm_package_bin_sound_packer ./test/assets.json",
+    "watch": "rollup -c -w",
+    "release": "np"
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "files": [
+    "dist/*",
+    "bin/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "sounds-packer": "./bin/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-unicorn": "^9.1.1",
+    "np": "^5.0.3",
+    "rollup": "^1.16.2",
+    "rollup-plugin-run": "^1.1.0",
+    "rollup-plugin-terser": "^5.0.0",
+    "source-map-support": "^0.5.12"
+  },
+  "dependencies": {
+    "camelcase": "^5.3.1",
+    "chalk": "^2.4.2",
+    "fs-extra": "^8.0.1",
+    "get-audio-duration": "^1.0.0",
+    "get-value": "^3.0.1",
+    "globby": "^9.2.0",
+    "hasha": "^5.0.0",
+    "log-symbols": "^3.0.0",
+    "meow": "^5.0.0",
+    "object.defaults": "^1.1.0",
+    "ora": "^3.4.0",
+    "pupa": "^2.0.0",
+    "sane": "^4.1.0",
+    "set-value": "^3.0.1",
+    "throttle-debounce": "^2.1.0",
+    "uppercamelcase": "^3.0.0"
+  }
+}
