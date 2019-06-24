@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-import meow from 'meow';
-import { pack } from '../dist';
+const meow = require('meow');
+const { pack } = require('../dist');
 
 const cli = meow(`
 	Usage
