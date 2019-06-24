@@ -1,5 +1,5 @@
 # sounds-packer
-Pack sounds for using in our project setup, right now for internal use, maybe usefull for the world later...
+Packs sounds for using in our current project setup. Right now built for internal use, maybe usefull for the world later...
 
 # Installation
 ```
