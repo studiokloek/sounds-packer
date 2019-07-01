@@ -128,8 +128,10 @@ async function copyFiles(itemPath, files, settings) {
 
   for (const file of files) {
     try {
-      await fs.copy(`${path.join(sourceDirectory, file.path,file.filename)}.mp3`, `${path.join(settings.targetDirectory, file.hash)}.mp3`);
-      await fs.copy(`${path.join(sourceDirectory, file.path, file.filename)}.ogg`, `${path.join(settings.targetDirectory, file.hash)}.ogg`);
+      // loop door formats
+      for (const format of settings.formats) {
+        await fs.copy(`${path.join(sourceDirectory, file.path,file.filename)}.${format}`, `${path.join(settings.targetDirectory, file.hash)}.${format}`);
+      }
     } catch (error) {
       console.log(error)
       return false;
