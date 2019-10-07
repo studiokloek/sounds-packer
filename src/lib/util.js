@@ -1,4 +1,9 @@
 export function makeVariableSafe(value) {
+
+  if (value.match(/^\d/)) {
+    value = `s${value}`;
+  }
+
   return value.replace(/(\W)/g, '_').replace(/_{2,}/g, '.').replace(/^_/, '').replace(/_$/, '');
 }
 
