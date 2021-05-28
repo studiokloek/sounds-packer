@@ -1,6 +1,6 @@
+import { packAll } from './lib/packer';
 import { readSettingsFrom } from './lib/settings';
 import { watch } from './lib/watcher';
-import { packAll } from './lib/packer';
 
 const AssetFile = 'assets.json';
 

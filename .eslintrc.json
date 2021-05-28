@@ -5,7 +5,7 @@
   },
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2018
+    "ecmaVersion": 2020
   },
   "plugins": [
     "unicorn",
@@ -20,6 +20,7 @@
     "node/no-unsupported-features/es-syntax": [
       "off"
     ],
+    "unicorn/prefer-node-protocol": "off",
     "no-console": "off",
     "prefer-template": "error",
     "prefer-const": [

@@ -1,11 +1,11 @@
-import { makeVariableSafe } from './util';
-import get from 'get-value';
-import set from 'set-value';
-import pupa from 'pupa';
-import uppercamelcase from 'uppercamelcase';
 import camelcase from 'camelcase';
 import fs from 'fs-extra';
+import get from 'get-value';
 import path from 'path';
+import pupa from 'pupa';
+import set from 'set-value';
+import uppercamelcase from 'uppercamelcase';
+import { makeVariableSafe } from './util';
 
 const loaderInfoTemplate = `export default {
   assetName : '{assetName}',
@@ -21,14 +21,14 @@ function convertPathToVariableName(filePath, basePath) {
   filePath = `${filePath}`;
 
   // basepath er af halen, path splitsen en opschonen
-  let parts = filePath.replace(`${basePath}/`, '').split('/').map(makeVariableSafe);
+  let parts = filePath.replace(`${basePath}/`, '').split('/').map((part) => makeVariableSafe(part));
 
   // haal laatste onderdeel er af
   let lastPart = parts.pop();
   lastPart = lastPart.toUpperCase();
 
   // camelcase andere onderdelen
-  parts = parts.map(camelcase);
+  parts = parts.map((part) => camelcase(part));
 
   // haal titel elementen uit base path
   let titleParts = basePath.split('/');
@@ -71,7 +71,7 @@ function getSortedItems(_itemsData) {
   const itemsSortable = [];
 
   for (const assetName of Object.keys(_itemsData)) {
-    if (_itemsData.hasOwnProperty(assetName)) {
+    if (Object.prototype.hasOwnProperty.call(_itemsData, assetName)) {
       itemsSortable.push([assetName, _itemsData[assetName]]);
     }
   }
@@ -80,7 +80,7 @@ function getSortedItems(_itemsData) {
     const x = a[0],
       y = b[0];
 
-    return x < y ? -1 : x > y ? 1 : 0;
+    return x < y ? -1 : (x > y ? 1 : 0);
   });
 
   const items = {};
@@ -99,8 +99,9 @@ function generateContents(parsedAssetData, loaderData) {
   for (const assetName of Object.keys(parsedAssetData)) {
     const items = getSortedItems(parsedAssetData[assetName]);
 
+    // eslint-disable-next-line unicorn/no-null
     let itemsContent = JSON.stringify(items, null, 2);
-    itemsContent = itemsContent.replace(/"([^(")"]+)":/g, "$1:");
+    itemsContent = itemsContent.replace(/"([^"()]+)":/g, "$1:");
 
     contents = `${contents}${pupa(assetTemplate, {
       assetName: assetName,

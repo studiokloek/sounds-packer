@@ -1,13 +1,12 @@
-import path from 'path';
-import ora from 'ora';
-import logSymbols from 'log-symbols';
 import chalk from 'chalk';
 import fs from 'fs-extra';
-import { generateCode } from './codegenerator';
 import { getAudioDurationInSeconds } from 'get-audio-duration';
 import globby from 'globby';
 import hasha from 'hasha';
-import { basename } from 'path';
+import logSymbols from 'log-symbols';
+import ora from 'ora';
+import path from 'path';
+import { generateCode } from './codegenerator';
 
 const isPacking = {},
   shouldPackAgain = {};
@@ -83,7 +82,7 @@ async function packFolder(itemPath, settings, itemOptions) {
   for (const filepath of paths) {
     // generate hash id
     let hash = await hasha.fromFile(filepath, { algorithm: 'md5' });
-    hash = hash.substring(0, 10);
+    hash = hash.slice(0, 10);
 
     // get duration
     let duration = await getAudioDurationInSeconds(filepath)
@@ -93,19 +92,20 @@ async function packFolder(itemPath, settings, itemOptions) {
     const cleanedFilepath = filepath.replace(`${sourceDirectory}/`, '');
 
     const info = {
-      filename: basename(cleanedFilepath, '.wav'),
-      path: cleanedFilepath.replace(`${basename(cleanedFilepath)}`, ''),
+      filename: path.basename(cleanedFilepath, '.wav'),
+      path: cleanedFilepath.replace(`${path.basename(cleanedFilepath)}`, ''),
       duration,
       hash,
     }
 
     // remove any prefix
     let cleanedFileName = info.filename;
-    settings.prefixes.forEach(prefix => {
+    for (const prefix of settings.prefixes) {
       if (cleanedFileName.startsWith(prefix)) {
         cleanedFileName = cleanedFileName.slice(prefix.length)
       }
-    });
+    }
+
     info.name = cleanedFileName;
 
     files.push(info);

@@ -1,9 +1,9 @@
-import path from 'path';
-import { pack } from './packer';
-import { sane } from 'sane';
-import logSymbols from 'log-symbols';
 import chalk from 'chalk';
+import logSymbols from 'log-symbols';
+import path from 'path';
+import sane from 'sane';
 import { debounce } from 'throttle-debounce';
+import { pack } from './packer';
 
 export async function watch(directories, settings) {
   for (const directory of directories) {
