@@ -7,7 +7,7 @@ import set from 'set-value';
 import uppercamelcase from 'uppercamelcase';
 import { makeVariableSafe } from './util';
 
-const loaderInfoTemplate = `export default {
+const loaderInfoTemplate = `export const {assets}LoaderInfo = {
   assetName : '{assetName}',
   assets : {assets},
   numberOfSounds : {numberOfSounds},
