@@ -14,9 +14,14 @@ const isPacking = {},
 export async function packAll(directories, settings) {
   console.log(logSymbols.info, chalk.blue(`Start packing all items...`));
 
-  // clean directory
   console.log(logSymbols.info, chalk.blue(`Clearing sounds directory (${settings.targetDirectory})...`));
-  await fs.emptyDir(settings.targetDirectory);
+  
+  // make sure dir exists
+  await fs.mkdirp(settings.targetDirectory);
+
+  // clean directory, except gitignore
+  const files = await fs.readdir(settings.targetDirectory);
+  await Promise.all(files.filter((file) => file.includes('.gitignore') === false).map(file => fs.remove(path.resolve(settings.targetDirectory,file))));
 
   for (const directory of directories) {
     await pack(directory, settings);
@@ -86,7 +91,7 @@ async function packFolder(itemPath, settings, itemOptions) {
 
     // get duration
     let duration = await getAudioDurationInSeconds(filepath)
-    duration = Math.round(duration * 10000) / 10000;
+    duration = Math.round(duration * 10_000) / 10_000;
 
     // basepath er af halen
     const cleanedFilepath = filepath.replace(`${sourceDirectory}/`, '');
