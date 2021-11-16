@@ -78,7 +78,7 @@ export async function pack(directory, settings) {
 }
 
 async function packFolder(itemPath, settings, itemOptions) {
-  const sourceDirectory = path.join(settings.sourceDirectory, itemPath);
+  const sourceDirectory = path.posix.join(settings.sourceDirectory, itemPath);
 
   // get all wav's
   const paths = await globby(`${sourceDirectory}/**/*.wav`),
