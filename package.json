@@ -12,7 +12,7 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test": "npx sounds-packer ./test/assets.json",
+    "test": "node ./bin/index.js ./test/assets.json",
     "release": "np"
   },
   "type": "module",
