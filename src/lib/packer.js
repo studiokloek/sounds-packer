@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import { getAudioDurationInSeconds } from 'get-audio-duration';
-import globby from 'globby';
+import { globby } from 'globby';
 import hasha from 'hasha';
 import logSymbols from 'log-symbols';
 import ora from 'ora';
