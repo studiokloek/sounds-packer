@@ -21,14 +21,14 @@ function convertPathToVariableName(filePath, basePath) {
   filePath = `${filePath}`;
 
   // basepath er af halen, path splitsen en opschonen
-  let parts = filePath.replace(`${basePath}/`, '').split('/').map(makeVariableSafe);
+  let parts = filePath.replace(`${basePath}/`, '').split('/').map(part => makeVariableSafe(part));
 
   // haal laatste onderdeel er af
   let lastPart = parts.pop();
   lastPart = lastPart.toUpperCase();
 
   // camelcase andere onderdelen
-  parts = parts.map(camelcase);
+  parts = parts.map(part => camelcase(part));
 
   // haal titel elementen uit base path
   let titleParts = basePath.split('/');
@@ -80,7 +80,7 @@ function getSortedItems(_itemsData) {
     const x = a[0],
       y = b[0];
 
-    return x < y ? -1 : x > y ? 1 : 0;
+    return x < y ? -1 : (x > y ? 1 : 0);
   });
 
   const items = {};
@@ -99,8 +99,8 @@ function generateContents(parsedAssetData, loaderData) {
   for (const assetName of Object.keys(parsedAssetData)) {
     const items = getSortedItems(parsedAssetData[assetName]);
 
-    let itemsContent = JSON.stringify(items, null, 2);
-    itemsContent = itemsContent.replace(/"([^(")"]+)":/g, "$1:");
+    let itemsContent = JSON.stringify(items, undefined, 2);
+    itemsContent = itemsContent.replace(/"([^"()]+)":/g, "$1:");
 
     contents = `${contents}${pupa(assetTemplate, {
       assetName: assetName,

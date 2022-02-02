@@ -19,6 +19,7 @@ export async function readSettingsFrom(_file) {
       targetDirectory: './assets/converted/',
       watch: false,
       watchDelay: 500,
+      onlyGenerateCode: false,
       prefixes: [],
       formats: ['ogg', 'mp3'],
       directories: []
@@ -29,7 +30,7 @@ export async function readSettingsFrom(_file) {
       const x = a,
         y = b;
 
-      return x < y ? 1 : x > y ? -1 : 0;
+      return x < y ? 1 : (x > y ? -1 : 0);
     });
 
   } catch (error) {
