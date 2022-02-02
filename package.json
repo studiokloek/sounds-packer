@@ -38,7 +38,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-unicorn": "^28.0.2",
     "np": "^7.6.0",
-    "rollup": "^2.66.1",
+    "rollup": "^2.67.0",
     "rollup-plugin-run": "^1.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "source-map-support": "^0.5.21"
