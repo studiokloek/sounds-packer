@@ -20,7 +20,7 @@
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "np": {
-    "yarn": false,
+    "yarn": true,
     "tests": false
   },
   "files": [
