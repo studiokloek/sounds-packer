@@ -13,7 +13,7 @@ export async function readSettingsFrom(_file) {
 
     settings = get(data, 'sounds', {});
 
-    settings = defaults(settings, {
+    settings = defaults({}, settings, {
       sourceDirectory: './assets/',
       scriptDirectory: './assets/converted/',
       targetDirectory: './assets/converted/',
@@ -21,6 +21,7 @@ export async function readSettingsFrom(_file) {
       watchDelay: 500,
       prefixes: [],
       formats: ['ogg', 'mp3'],
+      onlyGenerateCode: false,
       directories: []
     });
 

@@ -116,10 +116,14 @@ async function packFolder(itemPath, settings, itemOptions) {
     files.push(info);
   }
 
-  const copied = await copyFiles(itemPath, files, settings);
+  const doCopy = settings.onlyGenerateCode !== true && itemOptions.onlyGenerateCode !== true;
 
-  if (!copied) {
-    return false;
+  if (doCopy) {
+    const copied = await copyFiles(itemPath, files, settings);
+    
+    if (!copied) {
+      return false;
+    }
   }
 
   await generateCode(itemPath, files, settings, itemOptions);
@@ -128,7 +132,6 @@ async function packFolder(itemPath, settings, itemOptions) {
 }
 
 async function copyFiles(itemPath, files, settings) {
-
   const sourceDirectory = path.join(settings.sourceDirectory, itemPath);
 
   for (const file of files) {
@@ -144,5 +147,5 @@ async function copyFiles(itemPath, files, settings) {
   }
 
   return true;
-}
+} 
 
