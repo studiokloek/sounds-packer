@@ -116,7 +116,7 @@ async function packFolder(itemPath, settings, itemOptions) {
     files.push(info);
   }
 
-  const doCopy = settings.onlyGenerateCode !== true && itemOptions.onlyGenerateCode !== true;
+  const doCopy = settings.onlyGenerateCode !== true && (!itemOptions || itemOptions.onlyGenerateCode !== true);
 
   if (doCopy) {
     const copied = await copyFiles(itemPath, files, settings);
