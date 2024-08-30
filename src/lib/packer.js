@@ -43,7 +43,7 @@ export async function pack(directory, settings) {
   }
 
   if (isPacking[itemPath]) {
-    console.log(logSymbols.warning, chalk.yellow(`Allready packing, starting again afterwards...`));
+    console.log(logSymbols.warning, chalk.yellow(`Already packing, starting again afterwards...`));
     shouldPackAgain[itemPath] = true;
     return;
   }
@@ -139,9 +139,11 @@ async function copyFiles(itemPath, files, settings) {
   for (const file of files) {
     try {
       // loop door formats
+      const actions = []
       for (const format of settings.formats) {
-        await fs.copy(`${path.join(sourceDirectory, file.path,file.filename)}.${format}`, `${path.join(settings.targetDirectory, file.hash)}.${format}`);
+        actions.push(fs.copy(`${path.join(sourceDirectory, file.path,file.filename)}.${format}`, `${path.join(settings.targetDirectory, file.hash)}.${format}`, { overwrite: false }))
       }
+      await Promise.all(actions)
     } catch (error) {
       console.log(error)
       return false;
