@@ -14,13 +14,12 @@ const isPacking = {},
 export async function packAll(directories, settings) {
   console.log(logSymbols.info, chalk.blue(`Start packing all items...`));
 
-  console.log(logSymbols.info, chalk.blue(`Clearing sounds directory (${settings.targetDirectory})...`));
-  
-  // make sure dir exists
+    // make sure dir exists
   await fs.mkdirp(settings.targetDirectory);
 
   // clean directory, except gitignore
   if (settings.clearTargetDirectory === true) {
+    console.log(logSymbols.info, chalk.blue(`Clearing sounds target directory (${settings.targetDirectory})...`));
     const files = await fs.readdir(settings.targetDirectory);
     await Promise.all(files.filter((file) => file.includes('.gitignore') === false).map(file => fs.remove(path.resolve(settings.targetDirectory,file))));
   }
