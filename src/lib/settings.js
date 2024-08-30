@@ -22,6 +22,7 @@ export async function readSettingsFrom(_file) {
       prefixes: [],
       formats: ['ogg', 'mp3'],
       onlyGenerateCode: false,
+      clearTargetDirectory: false,
       directories: []
     });
 

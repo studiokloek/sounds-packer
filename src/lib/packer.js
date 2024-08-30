@@ -20,8 +20,10 @@ export async function packAll(directories, settings) {
   await fs.mkdirp(settings.targetDirectory);
 
   // clean directory, except gitignore
-  const files = await fs.readdir(settings.targetDirectory);
-  await Promise.all(files.filter((file) => file.includes('.gitignore') === false).map(file => fs.remove(path.resolve(settings.targetDirectory,file))));
+  if (settings.clearTargetDirectory === true) {
+    const files = await fs.readdir(settings.targetDirectory);
+    await Promise.all(files.filter((file) => file.includes('.gitignore') === false).map(file => fs.remove(path.resolve(settings.targetDirectory,file))));
+  }
 
   for (const directory of directories) {
     await pack(directory, settings);
