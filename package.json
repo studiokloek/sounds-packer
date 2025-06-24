@@ -1,6 +1,6 @@
 {
   "name": "@studiokloek/sounds-packer",
-  "version": "1.4.6",
+  "version": "1.5.0",
   "description": "Tool to pack sounds for usage in projects.",
   "author": "Martijn Swart <opensource@studiokloek.nl> (https://studiokloek.nl)",
   "license": "MIT",
