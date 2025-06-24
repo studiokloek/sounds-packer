@@ -2,6 +2,7 @@ import ora from 'ora';
 import fs from 'fs-extra';
 import get from 'get-value';
 import defaults from 'object.defaults';
+import { getPrefixVariants } from './util';
 
 export async function readSettingsFrom(_file) {
   const spinner = ora(`Reading settings from ${_file}...`).start();
@@ -25,6 +26,10 @@ export async function readSettingsFrom(_file) {
       clearTargetDirectory: false,
       directories: []
     });
+
+    if (settings.prefixes.length > 0) {
+      settings.prefixes = getPrefixVariants(settings.prefixes);
+    }
 
     // sort prefixes
     settings.prefixes.sort((a, b) => {
